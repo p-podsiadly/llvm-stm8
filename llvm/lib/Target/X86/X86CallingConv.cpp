@@ -197,6 +197,7 @@ static bool CC_X86_32_VectorCall(unsigned &ValNo, MVT &ValVT, MVT &LocVT,
     return true;
   }
 
+
   // Process only vector types as defined by vectorcall spec:
   // "A vector type is either a floating point type, for example,
   //  a float or double, or an SIMD vector type, for example, __m128 or __m256".

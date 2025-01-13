@@ -181,6 +181,12 @@ StringRef llvm::object::getELFRelocationTypeName(uint32_t Machine,
       break;
     }
     break;
+  case ELF::EM_STM8:
+    switch(Type) {
+#include "llvm/BinaryFormat/ELFRelocs/STM8.def"
+    default:
+      break;
+    }
   default:
     break;
   }

@@ -2447,6 +2447,15 @@ Interrupt handler functions defined with the signal attribute do not re-enable i
 }];
 }
 
+def STM8InterruptDocs : Documentation {
+  let Category = DocCatFunction;
+  let Heading = "interrupt (STM8)";
+  let Content = [{
+Clang supports the GNU style ``__attribute__((interrupt(<interrupt_number>)))`` attribute
+on STM8 targets.
+  }];
+}
+
 def TargetDocs : Documentation {
   let Category = DocCatFunction;
   let Content = [{
@@ -2880,6 +2889,16 @@ This convention does not support variadic calls or unprototyped functions in C.
 When targeting M68010 or newer CPUs, this calling convention is implemented
 using the `rtd` instruction.
   }];
+}
+
+def SDCCCallV0Docs : Documentation {
+  let Category = DocCatCallingConvs;
+  let Content = [{SDCC v0 call convention for STM8.}];
+}
+
+def SDCCCallV1Docs : Documentation {
+  let Category = DocCatCallingConvs;
+  let Content = [{SDCC v1 call convention for STM8.}];
 }
 
 def DocCatConsumed : DocumentationCategory<"Consumed Annotation Checking"> {

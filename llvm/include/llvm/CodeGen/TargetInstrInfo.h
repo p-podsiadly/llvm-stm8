@@ -166,6 +166,12 @@ protected:
   /// not always available.
   virtual bool isReallyTriviallyReMaterializable(const MachineInstr &MI) const;
 
+  /// Can an instruction be rematerialized if it has an implicit def of a
+  /// register? Rematerializing such instructions can be beneficial,
+  /// but requires special handling of implicit defs by the backend.
+  virtual bool canReMatImplicitRegisterDef(const MachineInstr &MI,
+                                           const Register &Reg) const;
+
   /// This method commutes the operands of the given machine instruction MI.
   /// The operands to be commuted are specified by their indices OpIdx1 and
   /// OpIdx2.

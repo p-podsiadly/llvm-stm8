@@ -636,6 +636,8 @@ lltok::Kind LLLexer::LexIdentifier() {
   KEYWORD(tailcc);
   KEYWORD(m68k_rtdcc);
   KEYWORD(graalcc);
+  KEYWORD(sdcccall0);
+  KEYWORD(sdcccall1);
 
   KEYWORD(cc);
   KEYWORD(c);

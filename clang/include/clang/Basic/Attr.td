@@ -430,6 +430,7 @@ def TargetARM : TargetArch<["arm", "thumb", "armeb", "thumbeb"]>;
 def TargetAArch64 : TargetArch<["aarch64", "aarch64_be", "aarch64_32"]>;
 def TargetAnyArm : TargetArch<!listconcat(TargetARM.Arches, TargetAArch64.Arches)>;
 def TargetAVR : TargetArch<["avr"]>;
+def TargetSTM8 : TargetArch<["stm8"]>;
 def TargetBPF : TargetArch<["bpfel", "bpfeb"]>;
 def TargetMips32 : TargetArch<["mips", "mipsel"]>;
 def TargetAnyMips : TargetArch<["mips", "mipsel", "mips64", "mips64el"]>;
@@ -918,6 +919,14 @@ def AVRSignal : InheritableAttr, TargetSpecificAttr<TargetAVR> {
   let Spellings = [GCC<"signal">];
   let Subjects = SubjectList<[Function]>;
   let Documentation = [AVRSignalDocs];
+}
+
+def STM8Interrupt : InheritableAttr, TargetSpecificAttr<TargetSTM8> {
+  let Spellings = [GCC<"interrupt">];
+  let Args = [IntArgument<"Interrupt">];
+  let Subjects = SubjectList<[Function]>;
+  let ParseKind = "Interrupt";
+  let Documentation = [STM8InterruptDocs];
 }
 
 def AsmLabel : InheritableAttr {
@@ -2866,6 +2875,16 @@ def PreserveAll : DeclOrTypeAttr {
 def M68kRTD: DeclOrTypeAttr {
   let Spellings = [Clang<"m68k_rtd">];
   let Documentation = [M68kRTDDocs];
+}
+
+def SDCCCallV0: DeclOrTypeAttr {
+  let Spellings = [Clang<"sdcccall0">];
+  let Documentation = [SDCCCallV0Docs];
+}
+
+def SDCCCallV1: DeclOrTypeAttr {
+  let Spellings = [Clang<"sdcccall1">];
+  let Documentation = [SDCCCallV1Docs];
 }
 
 def Target : InheritableAttr {

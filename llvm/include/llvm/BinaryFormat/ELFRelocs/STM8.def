@@ -1,0 +1,8 @@
+#ifndef ELF_RELOC
+#error "ELF_RELOC must be defined"
+#endif
+
+ELF_RELOC(R_STM8_NONE,    0)
+ELF_RELOC(R_STM8_8,       1)
+ELF_RELOC(R_STM8_16,      2)
+ELF_RELOC(R_STM8_8_PCREL, 3)

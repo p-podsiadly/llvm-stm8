@@ -362,6 +362,8 @@ static void PrintCallingConv(unsigned cc, raw_ostream &Out) {
   case CallingConv::AMDGPU_KERNEL: Out << "amdgpu_kernel"; break;
   case CallingConv::AMDGPU_Gfx:    Out << "amdgpu_gfx"; break;
   case CallingConv::M68k_RTD:      Out << "m68k_rtdcc"; break;
+  case CallingConv::STM8_SDCC_v0:  Out << "sdcccall0" ; break;
+  case CallingConv::STM8_SDCC_v1:  Out << "sdcccall1" ; break;
   }
 }
 

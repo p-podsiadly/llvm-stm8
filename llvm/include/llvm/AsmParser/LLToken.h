@@ -179,6 +179,8 @@ enum Kind {
   kw_tailcc,
   kw_m68k_rtdcc,
   kw_graalcc,
+  kw_sdcccall0,
+  kw_sdcccall1,
 
   // Attributes:
   kw_attributes,

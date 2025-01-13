@@ -997,6 +997,16 @@ enum {
 #include "ELFRelocs/Xtensa.def"
 };
 
+// STM8 specific e_flags
+enum : unsigned {
+  EF_STM8_NABI = 0x80000000,
+};
+
+// ELF Relocation types for STM8
+enum {
+#include "ELFRelocs/STM8.def"
+};
+
 #undef ELF_RELOC
 
 // Section header.

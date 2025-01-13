@@ -1047,6 +1047,12 @@ void TypePrinter::printFunctionAfter(const FunctionType::ExtInfo &Info,
     case CC_M68kRTD:
       OS << " __attribute__((m68k_rtd))";
       break;
+    case CC_SDCCCallV0:
+      OS << " __attribute__((sdcccall0))";
+      break;
+    case CC_SDCCCallV1:
+      OS << " __attribute__((sdcccall1))";
+      break;
     }
   }
 
@@ -1884,6 +1890,12 @@ void TypePrinter::printAttributedAfter(const AttributedType *T,
     break;
   case attr::M68kRTD:
     OS << "m68k_rtd";
+    break;
+  case attr::SDCCCallV0:
+    OS << "sdcccall0";
+    break;
+  case attr::SDCCCallV1:
+    OS << "sdcccall1";
     break;
   case attr::NoDeref:
     OS << "noderef";

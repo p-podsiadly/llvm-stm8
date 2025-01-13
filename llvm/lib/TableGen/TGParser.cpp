@@ -265,6 +265,10 @@ bool TGParser::SetValue(Record *CurRec, SMLoc Loc, Init *ValName,
     // Loop over bits, assigning values as appropriate.
     for (unsigned i = 0, e = BitList.size(); i != e; ++i) {
       unsigned Bit = BitList[i];
+
+      if (NewBits.size() <= Bit)
+        return Error(Loc, "Initializer exceeds the size of the field"); 
+
       if (NewBits[Bit])
         return Error(Loc, "Cannot set bit #" + Twine(Bit) + " of value '" +
                      ValName->getAsUnquotedString() + "' more than once");

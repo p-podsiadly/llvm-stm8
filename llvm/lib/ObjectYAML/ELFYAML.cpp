@@ -922,6 +922,9 @@ void ScalarEnumerationTraits<ELFYAML::ELF_REL>::enumeration(
   case ELF::EM_XTENSA:
 #include "llvm/BinaryFormat/ELFRelocs/Xtensa.def"
     break;
+  case ELF::EM_STM8:
+#include "llvm/BinaryFormat/ELFRelocs/STM8.def"
+    break;
   default:
     // Nothing to do.
     break;

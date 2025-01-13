@@ -1,0 +1,33 @@
+; RUN: llvm-mc -triple stm8 -show-encoding < %s | FileCheck %s
+
+test:
+
+    OR A, #0x10
+    OR A, 0x10
+    OR A, 0x1000
+    OR A, (X)
+    OR A, (#0x10,X)
+    OR A, (#0x1000,X)
+    OR A, (Y)
+    OR A, (#0x10,Y)
+    OR A, (#0x1000,Y)
+    OR A, (#0x12,SP)
+    OR A, [0x10]
+    OR A, [0x1000]
+
+; CHECK: or a,#0x10         ; encoding: [0xaa,0x10]
+; TODO short mem address
+; CHECK: or a,0x10          ; encoding: [0xca,0x00,0x10]
+; CHECK: or a,0x1000        ; encoding: [0xca,0x10,0x00]
+; CHECK: or a,(x)           ; encoding: [0xfa]
+; TODO short offset
+; CHECK: or a,(#0x10,x)     ; encoding: [0xda,0x00,0x10]
+; CHECK: or a,(#0x1000,x)   ; encoding: [0xda,0x10,0x00]
+; CHECK: or a,(y)           ; encoding: [0x90,0xfa]
+; TODO short offset
+; CHECK: or a,(#0x10,y)     ; encoding: [0x90,0xda,0x00,0x10]
+; CHECK: or a,(#0x1000,y)   ; encoding: [0x90,0xda,0x10,0x00]
+; CHECK: or a,(#0x12,sp)    ; encoding: [0x1a,0x12]
+; TODO short mem address
+; CHECK: or a,[0x10]        ; encoding: [0x72,0xca,0x00,0x10]
+; CHECK: or a,[0x1000]      ; encoding: [0x72,0xca,0x10,0x00]

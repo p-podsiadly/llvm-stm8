@@ -724,8 +724,14 @@ bool AsmLexer::isAtStartOfComment(const char *Ptr) {
 }
 
 bool AsmLexer::isAtStatementSeparator(const char *Ptr) {
-  return strncmp(Ptr, MAI.getSeparatorString(),
-                 strlen(MAI.getSeparatorString())) == 0;
+  const char *Separator = MAI.getSeparatorString();
+
+  if (Separator) {
+    return strncmp(Ptr, MAI.getSeparatorString(),
+                   strlen(MAI.getSeparatorString())) == 0;
+  } else {
+    return false;
+  }
 }
 
 AsmToken AsmLexer::LexToken() {

@@ -2005,6 +2005,8 @@ void LLParser::parseOptionalDLLStorageClass(unsigned &Res) {
 ///   ::= 'tailcc'
 ///   ::= 'm68k_rtdcc'
 ///   ::= 'graalcc'
+///   ::= 'sdcccall0'
+///   ::= 'sdcccall1'
 ///   ::= 'cc' UINT
 ///
 bool LLParser::parseOptionalCallingConv(unsigned &CC) {
@@ -2074,6 +2076,8 @@ bool LLParser::parseOptionalCallingConv(unsigned &CC) {
   case lltok::kw_tailcc:         CC = CallingConv::Tail; break;
   case lltok::kw_m68k_rtdcc:     CC = CallingConv::M68k_RTD; break;
   case lltok::kw_graalcc:        CC = CallingConv::GRAAL; break;
+  case lltok::kw_sdcccall0:      CC = CallingConv::STM8_SDCC_v0; break;
+  case lltok::kw_sdcccall1:      CC = CallingConv::STM8_SDCC_v0; break;
   case lltok::kw_cc: {
       Lex.Lex();
       return parseUInt32(CC);

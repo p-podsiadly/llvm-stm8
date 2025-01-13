@@ -251,6 +251,9 @@ namespace CallingConv {
     /// Used by GraalVM. Two additional registers are reserved.
     GRAAL = 107,
 
+    STM8_SDCC_v0 = 108,
+    STM8_SDCC_v1 = 109,
+
     /// The highest possible ID. Must be some 2^k - 1.
     MaxID = 1023
   };

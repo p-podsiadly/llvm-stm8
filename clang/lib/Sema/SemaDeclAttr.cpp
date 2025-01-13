@@ -5219,6 +5219,12 @@ static void handleCallConvAttr(Sema &S, Decl *D, const ParsedAttr &AL) {
   case ParsedAttr::AT_M68kRTD:
     D->addAttr(::new (S.Context) M68kRTDAttr(S.Context, AL));
     return;
+  case ParsedAttr::AT_SDCCCallV0:
+    D->addAttr(::new (S.Context) SDCCCallV0Attr(S.Context, AL));
+    return;
+  case ParsedAttr::AT_SDCCCallV1:
+    D->addAttr(::new (S.Context) SDCCCallV1Attr(S.Context, AL));
+    return;
   default:
     llvm_unreachable("unexpected attribute kind");
   }
@@ -5424,6 +5430,12 @@ bool Sema::CheckCallingConvAttr(const ParsedAttr &Attrs, CallingConv &CC,
     break;
   case ParsedAttr::AT_M68kRTD:
     CC = CC_M68kRTD;
+    break;
+  case ParsedAttr::AT_SDCCCallV0:
+    CC = CC_SDCCCallV0;
+    break;
+  case ParsedAttr::AT_SDCCCallV1:
+    CC = CC_SDCCCallV1;
     break;
   default: llvm_unreachable("unexpected attribute kind");
   }
@@ -7689,6 +7701,26 @@ static void handleAVRSignalAttr(Sema &S, Decl *D, const ParsedAttr &AL) {
   handleSimpleAttribute<AVRSignalAttr>(S, D, AL);
 }
 
+static void handleSTM8InterruptAttr(Sema &S, Decl *D, const ParsedAttr &AL) {
+  if (!isa<FunctionDecl>(D)) {
+    S.Diag(D->getLocation(), diag::err_attribute_wrong_decl_type)
+        << AL << AL.isRegularKeywordAttribute() << ExpectedFunction;
+    return;
+  }
+
+  if (!AL.checkExactlyNumArgs(S, 1)) {
+    return;
+  }
+
+  Expr *Arg = AL.isArgExpr(0) ? AL.getArgAsExpr(0) : nullptr;
+  uint32_t InterruptNum = 0;
+  if (!checkUInt32Argument(S, AL, Arg, InterruptNum)) {
+    return;
+  }
+
+  D->addAttr(::new (S.Context) STM8InterruptAttr(S.Context, AL, InterruptNum));
+}
+
 static void handleBPFPreserveAIRecord(Sema &S, RecordDecl *RD) {
   // Add preserve_access_index attribute to all fields and inner records.
   for (auto *D : RD->decls()) {
@@ -7905,6 +7937,9 @@ static void handleInterruptAttr(Sema &S, Decl *D, const ParsedAttr &AL) {
     break;
   case llvm::Triple::avr:
     handleAVRInterruptAttr(S, D, AL);
+    break;
+  case llvm::Triple::stm8:
+    handleSTM8InterruptAttr(S, D, AL);
     break;
   case llvm::Triple::riscv32:
   case llvm::Triple::riscv64:

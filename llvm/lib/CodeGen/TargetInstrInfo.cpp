@@ -1265,6 +1265,9 @@ bool TargetInstrInfo::isReallyTriviallyReMaterializable(
         // it could get allocated to something with a def during allocation.
         if (!MRI.isConstantPhysReg(Reg))
           return false;
+      } else if (MO.isImplicit()) {
+        // Implicit def. Let the backend decide what to do.
+        return canReMatImplicitRegisterDef(MI, Reg);
       } else {
         // A physreg def. We can't remat it.
         return false;
@@ -1274,8 +1277,9 @@ bool TargetInstrInfo::isReallyTriviallyReMaterializable(
 
     // Only allow one virtual-register def.  There may be multiple defs of the
     // same virtual register, though.
-    if (MO.isDef() && Reg != DefReg)
+    if (MO.isDef() && Reg != DefReg) {
       return false;
+    }
 
     // Don't allow any virtual-register uses. Rematting an instruction with
     // virtual register uses would length the live ranges of the uses, which
@@ -1286,6 +1290,11 @@ bool TargetInstrInfo::isReallyTriviallyReMaterializable(
 
   // Everything checked out.
   return true;
+}
+
+bool TargetInstrInfo::canReMatImplicitRegisterDef(
+    const MachineInstr & /*MI*/, const Register & /*Reg*/) const {
+  return false;
 }
 
 int TargetInstrInfo::getSPAdjust(const MachineInstr &MI) const {
